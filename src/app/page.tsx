@@ -3,6 +3,7 @@ import FeaturedCryptos from "@/components/FeaturedCrypto";
 import NewCryptos from "@/components/NewCryptos";
 import Image from "next/image";
 
+
 export default function HomePage() {
   return (
     <>
