@@ -98,6 +98,7 @@ export default function NewCryptos() {
               Ver todas las criptomonedas nuevas
             </button>
           </Link>
+          
         </div>
       </div>
     </section>
