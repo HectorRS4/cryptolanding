@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 
 
 type Crypto = {
+  id: string;
   name: string;
   symbol: string;
   price: string;
@@ -27,6 +28,7 @@ export default function FeaturedCryptos() {
       const data = await res.json();
 
       const formatted = data.map((coin: any) => ({
+        id: coin.id,
         name: coin.name,
         symbol: coin.symbol.toUpperCase(),
         price: `$${coin.current_price.toLocaleString()}`,

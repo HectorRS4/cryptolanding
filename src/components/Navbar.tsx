@@ -41,8 +41,8 @@ export default function Navbar() {
               Criptomonedas Populares
             </Link>
             <Link 
-              href="/new"
-              onClick={(e) => handleLinkClick('/new', e)}
+              href="/newcrypto"
+              onClick={(e) => handleLinkClick('/newcrypto', e)}
               className="text-white hover:text-accent transition-colors duration-200 font-medium"
             >
               Criptomonedas Nuevas
@@ -108,8 +108,8 @@ export default function Navbar() {
                 <span>Criptomonedas Populares</span>
               </Link>
               <Link 
-                href="/new"
-                onClick={(e) => handleLinkClick('/new', e)}
+                href="/newcrypto"
+                onClick={(e) => handleLinkClick('/newcrypto', e)}
                 className="text-white hover:text-accent transition-colors duration-200 font-medium py-2 flex items-center space-x-3"
               >
                 <span className="w-2 h-2 bg-accent rounded-full"></span>

@@ -1,4 +1,5 @@
 interface CryptoCardProps {
+  id: string;
   name: string;
   symbol: string;
   price: string;
@@ -7,7 +8,7 @@ interface CryptoCardProps {
   iconUrl: string;
 }
 
-export default function CryptoCard({ name, symbol, price, change, marketCap, iconUrl }: CryptoCardProps) {
+export default function CryptoCard({ id, name, symbol, price, change, marketCap, iconUrl }: CryptoCardProps) {
   return (
     <div className="w-full sm:w-64 h-auto sm:h-80 bg-soft text-white p-4 border border-gray-700 flex flex-col sm:flex-col justify-between items-center">
       {/* Layout responsive: horizontal en móvil, vertical en desktop */}
@@ -30,11 +31,16 @@ export default function CryptoCard({ name, symbol, price, change, marketCap, ico
       </div>
 
       {/* Botón - siempre en la parte inferior */}
-      <div className="w-full mt-4 sm:mt-4 flex items-center justify-center border-t border-gray-600 pt-4">
-        <button className="bg-accent text-white px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base font-primary shadow-lg hover:bg-yellow-500 hover:shadow-xl hover:scale-105 hover:animate-pulse transition-all duration-300 transform">
-          {name} News
-        </button>
-      </div>
+      <div className="mt-4 pt-4 border-t border-gray-600">
+                    <a
+                      href={`https://www.coingecko.com/en/coins/${id}`}
+                      target="_blank"
+                      className="text-accent hover:text-blue-300 text-sm underline transition-colors"
+                      rel="noreferrer"
+                    >
+                      Ver en CoinGecko →
+                    </a>
+                  </div>
     </div>
   );
 }

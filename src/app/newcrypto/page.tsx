@@ -1,4 +1,5 @@
-"use client";
+// src/app/featured-crypto/page.tsx
+"use client"
 import { useEffect, useState } from "react";
 
 interface Crypto {
@@ -11,7 +12,7 @@ interface Crypto {
   market_cap: number;
 }
 
-export default function FeaturedCryptoPage() {
+export default function NewCryptos() {
   const [cryptos, setCryptos] = useState<Crypto[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,7 +21,7 @@ export default function FeaturedCryptoPage() {
 
   useEffect(() => {
     fetch(
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false"
+      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_asc&per_page=100&page=1&sparkline=false"
     )
       .then(res => res.json())
       .then(data => {
@@ -34,6 +35,7 @@ export default function FeaturedCryptoPage() {
       });
   }, []);
 
+  // Calcular las criptomonedas para la página actual
   const getCurrentPageCryptos = () => {
     const startIndex = (currentPage - 1) * cryptosPerPage;
     const endIndex = startIndex + cryptosPerPage;
@@ -42,6 +44,7 @@ export default function FeaturedCryptoPage() {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+    // Scroll al inicio de la página
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -49,7 +52,7 @@ export default function FeaturedCryptoPage() {
     <main className="bg-primary min-h-screen text-white font-sans px-6 py-24">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-4xl font-bold mb-10 text-center">
-          Criptomonedas <span className="text-accent">Populares</span>
+          Criptomonedas <span className="text-accent">Nuevas</span>
         </h1>
 
         {loading ? (
@@ -59,30 +62,24 @@ export default function FeaturedCryptoPage() {
           </div>
         ) : (
           <>
+            {/* Grid de tarjetas */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
               {getCurrentPageCryptos().map(coin => (
                 <div
                   key={coin.id}
                   className="bg-soft p-6 rounded-md border border-gray-700 hover:shadow-lg transition relative"
                 >
-                  {/* Indicador de tendencia */}
-                  <div className="absolute top-5 right-2">
-                    <div className={`w-2 h-2 rounded-full ${coin.price_change_percentage_24h > 0 ? 'bg-green-400' : 'bg-red-400'
-                      }`}></div>
+                  {/* Indicador de tendencia en la esquina superior derecha */}
+                  <div className="absolute top-2 right-2">
+                    <div className={`w-2 h-2 rounded-full ${
+                      coin.price_change_percentage_24h > 0 ? 'bg-green-400' : 'bg-red-400'
+                    }`}></div>
                   </div>
 
-                  <div className="absolute top-20 right-10" >
-                    {/* Aquí puedes meter lo que quieras */}
-                    <span className="bg-blue-900 text-blue-300 text-ls px-2 py-1 rounded">
-                      🚀 Nuevo
-                    </span>
-                    {/* <img src="/grafico-mini.png" alt="Mini gráfico" className="w-20" /> */}
-                  </div>
-              
                   <div className="flex items-center space-x-4 mb-4">
-                    <img
-                      src={coin.image}
-                      alt={coin.name}
+                    <img 
+                      src={coin.image} 
+                      alt={coin.name} 
                       className="w-12 h-12"
                       onError={(e) => {
                         e.currentTarget.onerror = null;
@@ -97,8 +94,9 @@ export default function FeaturedCryptoPage() {
                   <p className="text-lg font-medium">
                     Precio: ${coin.current_price.toLocaleString()}
                   </p>
-                  <p className={`text-sm mt-1 ${coin.price_change_percentage_24h > 0 ? 'text-green-400' : 'text-red-400'
-                    }`}>
+                  <p className={`text-sm mt-1 ${
+                    coin.price_change_percentage_24h > 0 ? 'text-green-400' : 'text-red-400'
+                  }`}>
                     Cambio 24h: {coin.price_change_percentage_24h?.toFixed(2)}%
                   </p>
                   <p className="text-sm text-gray-300 mt-1">
@@ -117,10 +115,12 @@ export default function FeaturedCryptoPage() {
                 </div>
               ))}
             </div>
+
             {/* Paginación */}
             {totalPages > 1 && (
               <>
                 <div className="flex justify-center items-center space-x-2 mt-8">
+                  {/* Botón Anterior */}
                   <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
@@ -128,6 +128,8 @@ export default function FeaturedCryptoPage() {
                   >
                     ← Anterior
                   </button>
+
+                  {/* Números de página */}
                   <div className="flex space-x-1">
                     {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                       let pageNumber;
@@ -140,20 +142,24 @@ export default function FeaturedCryptoPage() {
                       } else {
                         pageNumber = currentPage - 2 + i;
                       }
+
                       return (
                         <button
                           key={pageNumber}
                           onClick={() => handlePageChange(pageNumber)}
-                          className={`px-3 py-2 rounded-md transition-colors ${currentPage === pageNumber
-                            ? 'bg-accent text-white'
-                            : 'bg-soft border border-gray-600 text-white hover:bg-gray-600'
-                            }`}
+                          className={`px-3 py-2 rounded-md transition-colors ${
+                            currentPage === pageNumber
+                              ? 'bg-accent text-white'
+                              : 'bg-soft border border-gray-600 text-white hover:bg-gray-600'
+                          }`}
                         >
                           {pageNumber}
                         </button>
                       );
                     })}
                   </div>
+
+                  {/* Botón Siguiente */}
                   <button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
@@ -162,8 +168,10 @@ export default function FeaturedCryptoPage() {
                     Siguiente →
                   </button>
                 </div>
+
+                {/* Información de página */}
                 <div className="text-center mt-4 text-gray-400 text-sm">
-                  Página {currentPage} de {totalPages} •
+                  Página {currentPage} de {totalPages} • 
                   Mostrando {getCurrentPageCryptos().length} de {cryptos.length} criptomonedas
                 </div>
               </>
